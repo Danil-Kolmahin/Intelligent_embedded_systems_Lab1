@@ -1,4 +1,2 @@
-.idea/ 
-node_modules/ 
-test.csv 
-package-lock.json 
+.idea/
+trashCode.js
