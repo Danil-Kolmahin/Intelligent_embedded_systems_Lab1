@@ -1,32 +1,14 @@
-const createCsvWriter = require('csv-writer').createObjectCsvWriter
+let canvas = document.querySelector('canvas')
 
-const path = 'test.csv'
-
-const header = [
-    {id: 'name', title: 'Name'},
-    {id: 'surname', title: 'Surname'},
-    {id: 'age', title: 'Age'},
-    {id: 'gender', title: 'Gender'},
-]
-
-const data = [
-    {
-        name: 'John',
-        surname: 'Snow',
-        age: 26,
-        gender: 'M',
-    }, {
-        name: 'Clair',
-        surname: 'White',
-        age: 33,
-        gender: 'F',
-    }, {
-        name: 'Fancy',
-        surname: 'Brown',
-        age: 78,
-        gender: 'F',
-    }
-]
-
-createCsvWriter({path, header}).writeRecords(data)
-    .then(() => console.log('The CSV file was written successfully'))
+addMethods(canvas)
+    .drawBorder({
+        before: (ctx) => ctx.strokeStyle = 'green',
+        after: (ctx) => ctx.strokeStyle = 'black',
+    })
+    .drawLines({
+        arrows: {
+            beforeArrows: (ctx) => ctx.strokeStyle = 'green',
+            afterArrows: (ctx) => ctx.strokeStyle = 'black',
+        },
+    })
+    .drawFunction({f: (x) => 2 * x + 1})
