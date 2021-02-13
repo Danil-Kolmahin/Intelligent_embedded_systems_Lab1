@@ -33,15 +33,10 @@ const div = document.getElementById('target')
 
 let last = document.createElement('canvas')
 div.before(last)
-addMethods(last, {
+new MyContext(last, {
     borderOptions: {
         before: (ctx) => ctx.strokeStyle = 'brown',
         after: (ctx) => ctx.strokeStyle = 'black',
-    },
-    markupOptions: {
-        every: 100,
-        shiftX: -2,
-        shiftY: -2,
     },
     withMarkup: {
         every: 10,

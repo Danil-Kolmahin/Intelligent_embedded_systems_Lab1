@@ -1,59 +1,95 @@
-const addMethods = (canvas, {
-    width = 500,
-    height = 500,
-    withBorder = true,
-    borderOptions = {},
-    // withArrows = true,
-    arrow_width = 10,
-    arrow_height = 10,
-    indent = 20,
-    shiftX = 0,
-    shiftY = 0,
-    arrowsOptions = {},
-    linesOptions = {},
-    markupOptions = {},
-    withMarkup = { // temp design
-        every = 10,
-    } = {},
-} = {}) => {
-    canvas.width = width
-    canvas.height = height
+class MyContext {
+    static DEFAULT_SETTINGS = {
+        width: 500,
+        height: 500,
+        withBorder: true,
+        borderOptions: {
+            before: () => {},
+            after: () => {},
+        },
+        // withArrows = true,
+        arrow_width: 10,
+        arrow_height: 10,
+        indent: 20,
+        shiftX: 0,
+        shiftY: 0,
+        arrowsOptions: {
+            beforeArrows: () => {},
+            afterArrows: () => {},
+        },
+        linesOptions: {
+            beforeLines: () => {},
+            afterLines: () => {},
+        },
+        markupOptions: {
+            needMarkup: true,
+            length: 10,
+            needSubscription: true,
+            step: 1,
+            font: '7px mono',
+        },
+        withMarkup: { // temp design
+            every: 10,
+        },
+    }
 
-    const ctx = canvas.getContext('2d')
+    constructor(canvas, options = MyContext.DEFAULT_SETTINGS) {
+        this.ctx = canvas.getContext('2d')
+        this.canvas = canvas
+        Object.keys(MyContext.DEFAULT_SETTINGS)
+            .forEach(opt => {
+            if (options[opt] !== undefined) {
+                this[opt] = options[opt]
+            } else {
+                this[opt] = MyContext.DEFAULT_SETTINGS[opt]
+            }
+        })
+        this.canvas.width = this.width
+        this.canvas.height = this.height
+        this.drawBorder()
+        this.drawLines()
+    }
 
-    // const line = (startX, startY, finishX, finishY, invertY = false) => {
-    //     if (!invertY) {
-    //         startY = height - startY
-    //         finishY = height - finishY
-    //     }
-    //     ctx.beginPath()
-    //     ctx.moveTo(startX, startY)
-    //     ctx.lineTo(finishX, finishY)
-    //     ctx.stroke()
-    // }
+    line(startX, startY, finishX, finishY, invertY = false) {
+        const {ctx} = this
+        if (!invertY) {
+            startY = height - startY
+            finishY = height - finishY
+        }
+        ctx.beginPath()
+        ctx.moveTo(startX, startY)
+        ctx.lineTo(finishX, finishY)
+        ctx.stroke()
+    }
 
-    // if (ctx.line === undefined) ctx.line = line
+    drawLines() {
+        const {
+            ctx,
+            height,
+            width,
+            indent,
+            shiftX,
+            shiftY,
+            arrow_width,
+            arrow_height,
+            withMarkup: {every,},
+            linesOptions: {
+                beforeLines,
+                afterLines,
+            },
+            arrowsOptions: {
+                beforeArrows,
+                afterArrows,
+            },
+            markupOptions: {
+                needMarkup,
+                length,
+                needSubscription,
+                step,
+                font,
+            },
+        } = this
 
-    const drawLines = ({
-                           lines: {
-                               beforeLines = () => {},
-                               afterLines = () => {},
-                           } = {},
-                           arrowsOptions: {
-                               beforeArrows = () => {},
-                               afterArrows = () => {},
-                           } = {},
-                           markupOptions: {
-                               needMarkup = true,
-                               length = 10,
-                               needSubscription = true,
-                               step = 1,
-                               font = '7px mono',
-                           } = {},
-                           withMarkup: {
-                               every = 10,
-                           } = {},
-                       } = {}) => {
         // lines
         beforeLines(ctx)
 
@@ -126,10 +162,17 @@ const addMethods = (canvas, {
         return ctx
     }
 
-    const drawBorder = ({
-                            before = () => {},
-                            after = () => {},
-                        }) => {
+    drawBorder() {
+        const {
+            ctx,
+            borderOptions: {
+                before,
+                after,
+            },
+            height,
+            width,
+        } = this
+
         before(ctx)
 
         ctx.beginPath()
@@ -142,22 +185,32 @@ const addMethods = (canvas, {
 
         after(ctx)
 
-        return ctx
+        return this
     }
 
-    const drawFunction = ({
-                              f = (x) => x,
-                              startX = 0,
-                              finishX = 10,
-                              step = 1,
-                              dotty = true,
-                          } = {}) => {
+    drawFunction({
+                     f = (x) => x,
+                     startX = 0,
+                     finishX = 10,
+                     step = 1,
+                     dotty = true,
+                 } = {}) {
+        const {
+            ctx,
+            height,
+            width,
+            indent,
+            shiftX,
+            shiftY,
+            withMarkup: {every,},
+        } = this
+
         ctx.beginPath()
         for (let x = startX; x <= finishX; x += step) {
             let y = f(x)
             // console.log(x, y)
-            let eX = (-shiftX + x) * withMarkup.every // !!!
-            let eY = (-shiftY + y) * withMarkup.every // !!!
+            let eX = (-shiftX + x) * every // !!!
+            let eY = (-shiftY + y) * every // !!!
             if (eX >= 0 && eX <= width - 2 * indent && eY >= 0 && eY <= height - 2 * indent) {
                 if (dotty) {
                     ctx.arc(indent + eX, height - indent - eY,
@@ -173,12 +226,6 @@ const addMethods = (canvas, {
         if (dotty) ctx.fill()
         else ctx.stroke()
 
-        return ctx
+        return this
     }
-
-    if (withBorder) drawBorder(borderOptions)
-    if (1) drawLines({ arrowsOptions, linesOptions, markupOptions, withMarkup })
-    if (ctx.drawFunction === undefined) ctx.drawFunction = drawFunction
-
-    return ctx
 }
