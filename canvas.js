@@ -28,8 +28,9 @@ class MyContext {
             step: 1,
             font: '7px mono',
         },
-        withMarkup: { // temp design
-            every: 10,
+        withMarkup: { // change name
+            everyX: 0,
+            everyY: 0,
         },
     }
 
@@ -72,7 +73,10 @@ class MyContext {
             shiftY,
             arrow_width,
             arrow_height,
-            withMarkup: {every,},
+            withMarkup: {
+                everyX,
+                everyY,
+            },
             linesOptions: {
                 beforeLines,
                 afterLines,
@@ -123,38 +127,38 @@ class MyContext {
 
         if (needMarkup) {
             // y every
-            for (let i = 1; i <= (height - arrow_height - indent * 2) / every; i++) {
+            for (let i = 1; i <= (height - arrow_height - indent * 2) / everyY; i++) {
                 ctx.beginPath()
                 ctx.moveTo(
                     indent - length / 2,
-                    height - indent - i * every)
+                    height - indent - i * everyY)
                 ctx.lineTo(
                     indent + length / 2,
-                    height - indent - i * every)
+                    height - indent - i * everyY)
                 ctx.stroke()
                 if (needSubscription) {
                     ctx.font = font
                     ctx.textAlign = 'right'
                     ctx.textBaseline = 'middle'
                     ctx.strokeText(`${shiftY + i * step}`, indent - length / 2,
-                        height - indent - i * every)
+                        height - indent - i * everyY)
                 }
             }
             // x every
-            for (let i = 1; i <= (width - arrow_height - indent * 2) / every; i++) {
+            for (let i = 1; i <= (width - arrow_height - indent * 2) / everyX; i++) {
                 ctx.beginPath()
                 ctx.moveTo(
-                    indent + i * every,
+                    indent + i * everyX,
                     height - indent + length / 2)
                 ctx.lineTo(
-                    indent + i * every,
+                    indent + i * everyX,
                     height - indent - length / 2)
                 ctx.stroke()
                 if (needSubscription) {
                     ctx.font = font
                     ctx.textAlign = 'center'
                     ctx.textBaseline = 'top'
-                    ctx.strokeText(`${shiftX + i * step}`, indent + i * every,
+                    ctx.strokeText(`${shiftX + i * step}`, indent + i * everyX,
                         height - indent + length / 2)
                 }
             }
@@ -202,15 +206,18 @@ class MyContext {
             indent,
             shiftX,
             shiftY,
-            withMarkup: {every,},
+            withMarkup: {
+                everyX,
+                everyY,
+            },
         } = this
 
         ctx.beginPath()
         for (let x = startX; x <= finishX; x += step) {
             let y = f(x)
             // console.log(x, y)
-            let eX = (-shiftX + x) * every // !!!
-            let eY = (-shiftY + y) * every // !!!
+            let eX = (-shiftX + x) * everyX // !!!
+            let eY = (-shiftY + y) * everyY // !!!
             if (eX >= 0 && eX <= width - 2 * indent && eY >= 0 && eY <= height - 2 * indent) {
                 if (dotty) {
                     ctx.arc(indent + eX, height - indent - eY,

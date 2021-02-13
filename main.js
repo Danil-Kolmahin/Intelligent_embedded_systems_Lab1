@@ -39,10 +39,11 @@ new MyContext(last, {
         after: (ctx) => ctx.strokeStyle = 'black',
     },
     withMarkup: {
-        every: 10,
+        everyY: 40,
+        everyX: 10,
     },
     shiftX: -10,
-    shiftY: -10,
+    shiftY: -5,
 }).drawFunction({
         f: getLab2Rxx, dotty: false,
         finishX: 31,
