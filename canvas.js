@@ -236,3 +236,74 @@ class MyContext {
         return this
     }
 }
+
+class Lab1Graph extends MyContext {
+    constructor(canvas) {
+        const options = {
+            width: 1300,
+            height: 200,
+            borderOptions: {
+                before: (ctx) => ctx.strokeStyle = 'green',
+                after: (ctx) => ctx.strokeStyle = 'black',
+            },
+            withMarkup: {
+                everyY: 40,
+                everyX: 40,
+            },
+            shiftY: -2,
+            arrowsOptions: {
+                beforeArrows: (ctx) => ctx.strokeStyle = 'green',
+                afterArrows: (ctx) => ctx.strokeStyle = 'black',
+            },
+        }
+        super(canvas, options)
+    }
+}
+
+class Lab2Rx extends MyContext {
+    constructor(canvas) {
+        const options = {
+            borderOptions: {
+                before: (ctx) => ctx.strokeStyle = 'blue',
+                after: (ctx) => ctx.strokeStyle = 'black',
+            },
+            arrowsOptions: {
+                beforeArrows: (ctx) => ctx.strokeStyle = 'blue',
+                afterArrows: (ctx) => ctx.strokeStyle = 'black',
+            },
+            width: 1300,
+            height: 300,
+            withMarkup: {
+                everyY: 40,
+                everyX: 40,
+            },
+            shiftY: -3,
+        }
+        super(canvas, options)
+    }
+}
+
+class LabOn extends MyContext {
+    constructor(canvas) {
+        const options = {
+            width: 1300,
+            height: 300,
+            borderOptions: {
+                before: (ctx) => ctx.strokeStyle = 'grey',
+                after: (ctx) => ctx.strokeStyle = 'black',
+            },
+            arrowsOptions: {
+                beforeArrows: (ctx) => ctx.strokeStyle = 'grey',
+                afterArrows: (ctx) => ctx.strokeStyle = 'black',
+            },
+            markupOptions: {
+                step: 10,
+            },
+            withMarkup: {
+                everyY: 0.1,
+                everyX: 10,
+            },
+        }
+        super(canvas, options)
+    }
+}

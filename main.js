@@ -1,57 +1,85 @@
-const div = document.getElementById('target')
-// const canvases = getLab1AllFunc.map(() => {
-//     let res = document.createElement('canvas')
-//     div.before(res)
-//     return res
-// })
-//
-// const colors = ['red', 'green', 'blue']
-//
-// canvases.forEach((canvas, index) => addMethods(canvas)
-//     .drawBorder({
-//         before: (ctx) => ctx.strokeStyle = colors[index],
-//         after: (ctx) => ctx.strokeStyle = 'black',
-//     })
-//     .drawLines({
-//         arrows: {
-//             beforeArrows: (ctx) => ctx.strokeStyle = colors[index],
-//             afterArrows: (ctx) => ctx.strokeStyle = 'black',
-//         },
-//         markupOptions: {
-//             every: 100,
-//         },
-//         shiftX: -2,
-//         shiftY: -2,
-//     })
-//     .drawFunction({
-//         f: getLab1AllFunc[index], dotty: false,
-//         shiftX: -2,
-//         shiftY: -2,
-//         every: 100,
-//         finishX: 31,
-//     }))
+const end = document.getElementById('target')
+end.before(document.createElement('h1').title = 'Intelligent embedded systems Lab1, Lab2')
 
-let last = document.createElement('canvas')
-div.before(last)
-new MyContext(last, {
-    borderOptions: {
-        before: (ctx) => ctx.strokeStyle = 'brown',
-        after: (ctx) => ctx.strokeStyle = 'black',
-    },
-    withMarkup: {
-        everyY: 40,
-        everyX: 10,
-    },
-    shiftX: -10,
-    shiftY: -5,
-}).drawFunction({
-        f: getLab2Rxx, dotty: false,
+const writeDescription = (text) => {
+    end.before(document.createElement('br'))
+    end.before(document.createElement('h1').title = text)
+    end.before(document.createElement('br'))
+}
+
+//Lab1
+//getLab1AllFunc
+getLab1AllFunc.forEach((_, i) => {
+    writeDescription('Lab1 #' + (i + 1))
+    const canvas = document.createElement('canvas')
+    new Lab1Graph(canvas).drawFunction({
+        f: getLab1AllFunc[i], dotty: false,
         finishX: 31,
     })
+    end.before(canvas)
+})
 
-const rows = [
-    ['name1', 'city1', 'some other info'],
-    ['name2', 'city2', 'more info'],
-]
+//getLab1AverageFunc
+writeDescription('Lab1 Average')
+const Lab1Average = document.createElement('canvas')
+new Lab1Graph(Lab1Average).drawFunction({
+    f: getLab1AverageFunc, dotty: false,
+    finishX: 31,
+})
+end.before(Lab1Average)
 
-// exportToCsv('test.csv', rows)
+//MX
+writeDescription('MX = ' + MX)
+//DX
+writeDescription('DX = ' + DX)
+
+//Lab1 O(n)
+writeDescription('Lab1 O(n)')
+const Lab1On = document.createElement('canvas')
+new LabOn(Lab1On).drawFunction({
+    f: getLab1On, dotty: false,
+    finishX: 89,
+})
+end.before(Lab1On)
+
+//Lab2
+//getLab2RxxFunc
+writeDescription('Lab2 Rxx')
+const Lab2RxxFunc = document.createElement('canvas')
+new Lab2Rx(Lab2RxxFunc).drawFunction({
+    f: getLab2RxxFunc, dotty: false,
+    finishX: 31,
+})
+end.before(Lab2RxxFunc)
+
+//getLab2RxyFunc
+writeDescription('Lab2 Rxy')
+const Lab2RxyFunc = document.createElement('canvas')
+new Lab2Rx(Lab2RxyFunc).drawFunction({
+    f: getLab2RxyFunc, dotty: false,
+    finishX: 31,
+})
+end.before(Lab2RxyFunc)
+
+//Rxx
+writeDescription('Rxx = ' + Rxx)
+//Rxy
+writeDescription('Rxy = ' + Rxy)
+
+//getLab2OnRxx
+writeDescription('Lab2 Rxx O(n)')
+const Lab2OnRxx = document.createElement('canvas')
+new LabOn(Lab2OnRxx).drawFunction({
+    f: getLab2OnRxx, dotty: false,
+    finishX: 89,
+})
+end.before(Lab2OnRxx)
+
+//getLab2OnRxy
+writeDescription('Lab2 Rxy O(n)')
+const Lab2OnRxy = document.createElement('canvas')
+new LabOn(Lab2OnRxy).drawFunction({
+    f: getLab2OnRxy, dotty: false,
+    finishX: 89,
+})
+end.before(Lab2OnRxy)
