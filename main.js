@@ -83,3 +83,30 @@ new LabOn(Lab2OnRxy).drawFunction({
     finishX: 89,
 })
 end.before(Lab2OnRxy)
+
+//Lab1 Additional (32 < N < 128) | (Mx * Dx * 10)
+writeDescription('Lab1 Additional (32 < N < 128) | (Mx * Dx * 10)')
+const Lab1Additional = document.createElement('canvas')
+new MyContext(Lab1Additional, {
+    width: 1300,
+    height: 200,
+    borderOptions: {
+        before: (ctx) => ctx.strokeStyle = 'orange',
+        after: (ctx) => ctx.strokeStyle = 'black',
+    },
+    withMarkup: {
+        everyY: 40,
+        everyX: 10,
+    },
+    shiftY: -2,
+    shiftX: 31,
+    arrowsOptions: {
+        beforeArrows: (ctx) => ctx.strokeStyle = 'orange',
+        afterArrows: (ctx) => ctx.strokeStyle = 'black',
+    },
+}).drawFunction({
+    f: getLab1Additional, dotty: false,
+    startX: 32,
+    finishX: 128,
+})
+end.before(Lab1Additional)
