@@ -198,6 +198,10 @@ class MyContext {
                      finishX = 10,
                      step = 1,
                      dotty = true,
+                     funcOptions: {
+                         beforeFunc = () => {},
+                         afterFunc = () => {},
+                     } = {},
                  } = {}) {
         const {
             ctx,
@@ -212,6 +216,7 @@ class MyContext {
             },
         } = this
 
+        beforeFunc(ctx)
         ctx.beginPath()
         for (let x = startX; x <= finishX; x += step) {
             let y = f(x)
@@ -232,6 +237,7 @@ class MyContext {
         }
         if (dotty) ctx.fill()
         else ctx.stroke()
+        afterFunc(ctx)
 
         return this
     }

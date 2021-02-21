@@ -167,5 +167,7 @@ const additional_1_1 = (A, fi, maxW, n) => {
 }
 
 const getLab1Additional = getFuncFromArray(additional_1_1(0.345248, 0.541387, 1500, 10))
+const averageRxxTimeCalc = lab2TimeCalcRxx.reduce((acc, cur) => acc + cur) / lab2TimeCalcRxx.length
+const averageRxyTimeCalc = lab2TimeCalcRxy.reduce((acc, cur) => acc + cur) / lab2TimeCalcRxy.length
 
 // additional 1.1

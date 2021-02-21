@@ -110,3 +110,28 @@ new MyContext(Lab1Additional, {
     finishX: 128,
 })
 end.before(Lab1Additional)
+
+//Lab2 Comparison of time to calculate Correlation (red) and AutoCorrelation (green)
+writeDescription('Lab2 Comparison of time to calculate Correlation (red) and AutoCorrelation (green)')
+const Lab2Additional = document.createElement('canvas')
+new LabOn(Lab2Additional).drawFunction({
+    f: getLab2OnRxx, dotty: false,
+    finishX: 89,
+    funcOptions: {
+        beforeFunc: (ctx) => ctx.strokeStyle = 'red',
+        afterFunc: (ctx) => ctx.strokeStyle = 'black',
+    },
+}).drawFunction({
+    f: getLab2OnRxy, dotty: false,
+    finishX: 89,
+    funcOptions: {
+        beforeFunc: (ctx) => ctx.strokeStyle = 'green',
+        afterFunc: (ctx) => ctx.strokeStyle = 'black',
+    },
+})
+end.before(Lab2Additional)
+
+//averageRxxTimeCalc
+writeDescription('averageRxxTimeCalc = ' + averageRxxTimeCalc)
+//averageRxyTimeCalc
+writeDescription('averageRxyTimeCalc = ' + averageRxyTimeCalc)
